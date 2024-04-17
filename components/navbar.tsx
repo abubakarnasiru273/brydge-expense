@@ -6,7 +6,8 @@ const Navbar: React.FC = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
 
   return (
-    <div className="flex flex-row justify-between ">
+    <div className="fixed top-50 w-full">
+    <div className="container mx-auto flex flex-row justify-between py-4 px-40 ">
       <div>
         <h1 className="text-black-600 text-2xl">Expense</h1>
       </div>
@@ -17,6 +18,7 @@ const Navbar: React.FC = () => {
         </button>
         <button> Sign In</button>
       </div>
+    </div>
     </div>
   );
 };
