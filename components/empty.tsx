@@ -1,7 +1,7 @@
 "use client";
 
 import { CgSmile } from "react-icons/cg";
-import { useState } from "react";
+
 
 export const Empty: React.FC = () => {
     
