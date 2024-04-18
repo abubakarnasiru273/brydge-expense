@@ -2,8 +2,12 @@
     const Dashboard: React.FC = () => {
      
         return (
-            <div>
-                <h1> Just Dashboards</h1>
+            <div className="">
+                <h1> Just a Dashboards</h1>
+
+                <div>
+                    {/* Transaction */}
+                </div>
             </div>
         )
 

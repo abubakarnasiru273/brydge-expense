@@ -1,8 +1,10 @@
 "use client";
 
 import { CgSmile } from "react-icons/cg";
+import { useState } from "react";
 
 export const Empty: React.FC = () => {
+    
   return (
     <div className="flex justify-center items-center h-screen">
       <div className="pr-8">
