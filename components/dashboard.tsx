@@ -19,13 +19,13 @@ const Dashboard: React.FC = () => {
   };
 
   return (
-    <div className="">
+    <div>
       <h1> Just a Dashboards</h1>
 
       <div>
         {/* Transaction */}
 
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between" mb-6>
           <h2 className="text-red-600 text-lg">Expenses</h2>
 
           <button
@@ -40,26 +40,42 @@ const Dashboard: React.FC = () => {
 
         <Modal isOpen={isModalOpen} onClose={closeModal} />
 
-        <table className="w-full">
+        <table className="w-full table-auto">
           <thead>
             <tr>
-              <th py-4 px-6>
-                Name
-              </th>
-              <th py-4 px-6>
-                Amount
-              </th>
-              <th py-4 px-6>
-                Category
-              </th>
-              <th py-4 px-6>
-                Date
-              </th>
-              <th py-4 px-6>
-                Summary
-              </th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th>Summary</th>
             </tr>
           </thead>
+
+          <tbody>
+            <tr>
+              <td>Summary</td>
+              <td>6000</td>
+              <td>Rent</td>
+              <td>16 April 2024</td>
+              <td>Summary was quick</td>
+            </tr>
+
+            <tr>
+              <td>Summary</td>
+              <td>6000</td>
+              <td>Rent</td>
+              <td>16 April 2024</td>
+              <td>Summary was quick</td>
+            </tr>
+
+            <tr>
+              <td>Summary</td>
+              <td>6000</td>
+              <td>Rent</td>
+              <td>16 April 2024</td>
+              <td>Summary was quick</td>
+            </tr>
+          </tbody>
         </table>
       </div>
     </div>
