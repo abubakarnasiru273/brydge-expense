@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 interface ModalProps {
   isOpen: boolean;
@@ -9,6 +10,8 @@ const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   const [fullName, setFullName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const supabase = createClientComponentClient();
 
   useEffect(() => {
     if (isOpen) {
@@ -23,12 +26,25 @@ const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
     setFullName("");
     setEmail("");
     setPassword("");
+    setError("");
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("Submitting form:", { fullName, email, password });
-    closeModal();
+    try {
+      const { user, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
+      if (error) {
+        throw error;
+      }
+      console.log("Registration successful:", user);
+      closeModal();
+    } catch (error) {
+      console.error("Error registering user:", error.message);
+      setError(error.message);
+    }
   };
 
   return (
@@ -50,7 +66,6 @@ const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   required
                 />
               </div>
-
               <div className="mb-4">
                 <label className="block text-gray-700 mb-1">
                   Email Address
@@ -63,7 +78,6 @@ const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   required
                 />
               </div>
-
               <div className="mb-4">
                 <label className="block text-gray-700 mb-1">Password</label>
                 <input
@@ -74,7 +88,8 @@ const SignUpModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
                   required
                 />
               </div>
-
+              <div className="text-red-500 mb-4">{error}</div>{" "}
+              {/* Display error message */}
               <div className="flex items-center justify-between">
                 <button
                   onClick={closeModal}
