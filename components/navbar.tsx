@@ -1,21 +1,17 @@
-"use client";
-
 import { useState } from "react";
-
 import SignModal from "./signmodal";
+import SignInModal from "./signin";
 
 const Navbar: React.FC = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(true);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<"SignUp" | "SignIn" | null>(null);
 
-  const openModal = () => {
-    console.log("Opening modal");
-    setIsModalOpen(true);
+  const openModal = (type: "SignUp" | "SignIn") => {
+    setModalType(type);
   };
 
   const closeModal = () => {
-    console.log("Closing modal");
-    setIsModalOpen(false);
+    setModalType(null);
   };
 
   return (
@@ -27,14 +23,15 @@ const Navbar: React.FC = () => {
         {loggedIn ? (
           <div>
             <button
-              onClick={openModal}
+              onClick={() => openModal("SignUp")}
               className=" text-white p-4 rounded-xl mr-4 rounded-full bg-zinc-950 "
             >
               Sign Up
             </button>
-            <button> Sign In</button>
+            <button onClick={() => openModal("SignIn")}> Sign In</button>
 
-            <SignModal isOpen={isModalOpen} onClose={closeModal} />
+            <SignModal isOpen={modalType === "SignUp"} onClose={closeModal} />
+            <SignInModal isOpen={modalType === "SignIn"} onClose={closeModal} />
           </div>
         ) : (
           <div>
