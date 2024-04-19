@@ -1,13 +1,15 @@
-"use client";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
-const SignModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
+  const [fullName, setFullName] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -18,6 +20,15 @@ const SignModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
 
   const closeModal = () => {
     onClose();
+    setFullName("");
+    setEmail("");
+    setPassword("");
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Submitting form:", { fullName, email, password });
+    closeModal();
   };
 
   return (
@@ -26,73 +37,59 @@ const SignModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
         <div className="fixed inset-0 z-50 flex items-center justify-center">
           <div className="bg-gray-900 bg-opacity-50 absolute inset-0"></div>
           <div className="bg-white p-8 rounded-lg shadow-lg z-50">
-            <h2 className="text-xl font-bold mb-4">Add a new expense</h2>
-            <p className="mb-4">Log your expense </p>
+            <h2 className="text-xl font-bold mb-4">Create an Account</h2>
 
-            <div>
-              <form className="w-full">
-                <div className="flex">
-                  <div className="w-1/2 mr-5">
-                    <label>Name</label>
-                    <input
-                      type="text"
-                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    />
-                  </div>
-                  <div className="w-1/2">
-                    <label>Amount</label>
-                    <input
-                      type="number"
-                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    />
-                  </div>
-                </div>
+            <form className="w-full" onSubmit={handleSubmit}>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">Full Name</label>
+                <input
+                  type="text"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  value={fullName}
+                  onChange={(e) => setFullName(e.target.value)}
+                  required
+                />
+              </div>
 
-                <div className="flex">
-                  <div className="w-1/2 mr-5">
-                    <label>Category</label>
-                    <select className="block appearance-none w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                      <option>New Mexico</option>
-                      <option>Missouri</option>
-                      <option>Texas</option>
-                    </select>
-                  </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">
+                  Email Address
+                </label>
+                <input
+                  type="email"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                />
+              </div>
 
-                  <div className="w-1/2">
-                    <label>Date</label>
-                    <input
-                      type="date"
-                      className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                    />
-                  </div>
-                </div>
+              <div className="mb-4">
+                <label className="block text-gray-700 mb-1">Password</label>
+                <input
+                  type="password"
+                  className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                />
+              </div>
 
-                <div className="mb-3">
-                  <label> Summary</label>
-                  <input
-                    type="text"
-                    className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                  />
-                </div>
-
-                <div className="flex mt-6">
-                  <button
-                    onClick={closeModal}
-                    className="bg-gray-300 w-1/2 mr-5 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
-                  >
-                    Cancel
-                  </button>
-
-                  <button
-                    type="submit"
-                    className="w-1/2  bg-zinc-950 hover:bg-white-500 text-white appearance-none font-bold py-2 px-4 rounded"
-                  >
-                    {" "}
-                    Add Expense
-                  </button>
-                </div>
-              </form>
-            </div>
+              <div className="flex items-center justify-between">
+                <button
+                  onClick={closeModal}
+                  className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  className="bg-zinc-950 hover:bg-white-500 text-white font-bold py-2 px-4 rounded"
+                >
+                  Create Account
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}
@@ -100,4 +97,4 @@ const SignModal: React.FC<ModalProps> = ({ isOpen, onClose }) => {
   );
 };
 
-export default SignModal;
+export default Modal;

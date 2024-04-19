@@ -2,8 +2,21 @@
 
 import { useState } from "react";
 
+import SignModal from "./signmodal";
+
 const Navbar: React.FC = () => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+
+  const openModal = () => {
+    console.log("Opening modal");
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    console.log("Closing modal");
+    setIsModalOpen(false);
+  };
 
   return (
     <div className="fixed top-0 w-full z-50">
@@ -13,10 +26,15 @@ const Navbar: React.FC = () => {
         </div>
         {loggedIn ? (
           <div>
-            <button className=" text-white p-4 rounded-xl mr-4 rounded-full bg-zinc-950 ">
+            <button
+              onClick={openModal}
+              className=" text-white p-4 rounded-xl mr-4 rounded-full bg-zinc-950 "
+            >
               Sign Up
             </button>
             <button> Sign In</button>
+
+            <SignModal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         ) : (
           <div>

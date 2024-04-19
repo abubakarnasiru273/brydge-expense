@@ -9,7 +9,7 @@ import Navbar from "@/components/navbar";
 import { useState } from "react";
 
 export default function Home() {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
   return (
     <div>
       <Navbar />
